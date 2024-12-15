@@ -14,7 +14,8 @@ def generate_textv1(model, idx, max_length, context_size):
 
 
 def generate_textv2(model, idx, max_length, context_size, temperature=0.0, top_k=None, eos_id=None):
-
+    model.to(idx.device)
+    model.eval()
     for _ in range(max_length):
         idx_cond = idx[:, -context_size:]
         with torch.no_grad():
@@ -38,6 +39,7 @@ def generate_textv2(model, idx, max_length, context_size, temperature=0.0, top_k
         idx = torch.cat((idx, idx_next), dim=1)
     
     return idx
+
 
 
 
